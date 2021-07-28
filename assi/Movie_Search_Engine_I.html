@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="movies">
+    <button onclick="getMovie()">Search</button>
+</body>
+
+</html>
+<script>
+
+    async function getMovie() {
+        let movie = document.getElementById("movies").value
+        let res = await fetch(`
+                        http://www.omdbapi.com/?apikey=fe0afbbc&t=${movie}
+                       `);
+        let data = await res.json();
+        console.log("data:", data);
+    }
+</script>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="movies">
+    <button onclick="getMovie()">Search</button>
+    <div id="image">
+    </div>
+    <div id="date"></div>
+    <div id="title"></div>
+    <div id="rating"></div>
+    <div id="runtime"></div>
+</body>
+
+</html>
+<script>
+
+    async function getMovie() {
+        let movie = document.getElementById("movies").value
+        let image = document.getElementById("image")
+        let data = document.getElementById("data")
+        let title = document.getElementById("title")
+        let rating = document.getElementById("rating")
+        let runtime = document.getElementById("runtime")
+        try{
+            let res = await fetch(`
+                        http://www.omdbapi.com/?apikey=fe0afbbc&t=${movie}
+                       `);
+            let data = await res.json();
+            image.innerHTML = `<img src="${data.Poster}" alt="">`
+            date.innerHTML =`<p>Released: ${data.Released}</p>`
+            title.innerHTML = `<p>Title: ${data.Title}</p>`
+            rating.innerHTML = `<p>imdbRating: ${data.imdbRating}</p>`
+            runtime.innerHTML = `<p>Runtime: ${data.Runtime}</p>`
+        }catch (err){
+            console.log("err:",err)
+        }
+    }
+</script>
