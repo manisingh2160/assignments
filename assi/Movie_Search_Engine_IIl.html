@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <input type="text" id="mName" placeholder="Enter Movie Name"><br>
+            <button onclick="getMovie()">Search</button>
+            <div id="movie"></div>
+
+            <div id="tooltip"><span id="tooltiptext"></span>
+            </div>
+        </div>
+    </header>
+</body>
+
+</html>
+<script>
+    async function getMovie() {
+        var div_data = document.getElementById("movie");
+        var mName = document.getElementById('mName').value
+        let res = await fetch(`http://www.omdbapi.com/?t=${mName}&apikey=692fa8fc`);
+        let data = await res.json();
+        console.log(data)
+        var k = `<img src="${data.Poster}" alt="img"><br>Title: ${data.Title}<br>Year: ${data.Year}<br>Rated: ${data.imdbRating}<br>Realesed: ${data.Released}<br>Runtime: ${data.Runtime}`
+        var img1 = data.Poster;
+        // console.log(k)
+        if (data.imdbRating != undefined) {
+            div_data.innerHTML = k;
+            if (data.imdbRating > 8.5) {
+                var h = document.getElementById('tooltiptext');
+                h.style.visibility = "visible";
+
+            }
+        } else {
+            var img = document.createElement('img');
+            img.src = 'https://freefrontend.com/assets/img/html-funny-404-pages/HTML-Beer-404-Page.gif';
+            div_data.append(img)
+        }
+    }
+</script>
